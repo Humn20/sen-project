@@ -19,11 +19,11 @@ let searchedName = ""
 let searchedRank = ""
 
 function SearchDNS(props) {
+  const [entry, setEntry] = useState("");
   const HandleSubmit = (e) =>{
     e.preventDefault();
-    console.log(e);
-    searchedName = "new";
-    searchedRank = 8;
+    searchedName = entry;   // needs to involve API call
+    searchedRank = 8;       // needs to involve API call
     props.data(0);
   }
   return (
@@ -33,7 +33,11 @@ function SearchDNS(props) {
           Enter a DNS Resolver:
         </Form.Label>
         <Col sm={8}>
-          <Form.Control placeholder="Search..." />
+          <Form.Control 
+            placeholder="Search..." 
+            value={entry}
+            onChange={e => setEntry(e.target.value)}
+          />
         </Col>
       </Form.Group>
     </Form>
