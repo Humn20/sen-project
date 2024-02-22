@@ -7,7 +7,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,9 +15,19 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-function SearchDNS() {
+let searchedName = ""
+let searchedRank = ""
+
+function SearchDNS(props) {
+  const HandleSubmit = (e) =>{
+    e.preventDefault();
+    console.log(e);
+    searchedName = "new";
+    searchedRank = 8;
+    props.data(0);
+  }
   return (
-    <Form>
+    <Form onSubmit={HandleSubmit}>
       <Form.Group as={Row} className="mb-3" controlId="formSearchDNS">
         <Form.Label column sm={4}>
           Enter a DNS Resolver:
@@ -57,11 +66,12 @@ function VisualizationComponent() {
 }
 
 function DNSComponent() {
+  const [state, setState] = useState(false);
   return (
     <>
       <Row className="justify-content-md-center">
         <Col md={8}>
-          <SearchDNS />
+          <SearchDNS data={setState}/>
         </Col>
       </Row>
 
@@ -80,7 +90,8 @@ function DNSComponent() {
 }
 
 function createFakeData(rank, name){
-  return {rank, name}
+  // this should eventually be an api call to get actual data
+  return {rank, name};
 }
 
 const data = [
@@ -113,6 +124,18 @@ function GetLatestResults() {
                 <TableCell align="center">{data.name}</TableCell>
               </TableRow>
             )}
+            <TableRow>
+              <TableCell component="th" scope="row">
+                ...
+              </TableCell>
+              <TableCell align="center">...</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                {searchedRank}
+              </TableCell>
+              <TableCell align="center">{searchedName}</TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
