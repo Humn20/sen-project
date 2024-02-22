@@ -24,7 +24,10 @@ function SearchDNS(props) {
     e.preventDefault();
     searchedName = entry;   // needs to involve API call
     searchedRank = 8;       // needs to involve API call
-    props.data(0);
+    data.push(createFakeData(searchedRank, searchedName));
+    props.stateSetter(!props.state);
+    e.target.reset();
+    setEntry("");
   }
   return (
     <Form onSubmit={HandleSubmit}>
@@ -75,7 +78,7 @@ function DNSComponent() {
     <>
       <Row className="justify-content-md-center">
         <Col md={8}>
-          <SearchDNS data={setState}/>
+          <SearchDNS state={state} stateSetter={setState}/>
         </Col>
       </Row>
 
@@ -94,18 +97,56 @@ function DNSComponent() {
 }
 
 function createFakeData(rank, name){
-  // this should eventually be an api call to get actual data
   return {rank, name};
 }
 
-const data = [
+// this should eventually be an api call to get actual data
+let data = [
   createFakeData(1, "Google"),
   createFakeData(2, "OpenDNS"),
   createFakeData(3, "Quad9"),
   createFakeData(4, "CloudFare")
 ]
 
+function sortData() {
+  let n = data.length;
+  let i, key, j;
+  for (i=1; i < n; i++){
+    key = data[i];
+    j = i-1;
+    while (j >= 0 && data[j].rank > key.rank){  
+      data[j + 1] = data[j];  
+        j = j - 1;  
+    }  
+    data[j + 1] = key; 
+
+  }
+  data = data.filter((value, index, self) =>
+    index === self.findIndex((t) => (
+      t.rank === value.rank && t.name === value.name
+    ))
+  )
+}
+
+function addBlanks(){
+  let dataToTable = [];
+  let i;
+  for(i=0; i<data.length-1; i++){
+    dataToTable.push(data[i]);
+    if (data[i].rank !== data[i+1].rank-1){
+      dataToTable.push(createFakeData("...", "..."));
+    }
+  }
+  dataToTable.push(createFakeData(data[data.length-1].rank, data[data.length-1].name));
+  return dataToTable;
+}
+
 function GetLatestResults() {
+  console.log(data);
+  sortData();
+  console.log("after");
+  console.log(data);
+  const dataForTable = addBlanks();
   return (
     <>
       <TableContainer component={Paper}>
@@ -117,7 +158,7 @@ function GetLatestResults() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((data)=>
+            {dataForTable.map((data)=>
               <TableRow 
                 key={data.rank}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -128,18 +169,6 @@ function GetLatestResults() {
                 <TableCell align="center">{data.name}</TableCell>
               </TableRow>
             )}
-            <TableRow>
-              <TableCell component="th" scope="row">
-                ...
-              </TableCell>
-              <TableCell align="center">...</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                {searchedRank}
-              </TableCell>
-              <TableCell align="center">{searchedName}</TableCell>
-            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
