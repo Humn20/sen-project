@@ -8,6 +8,14 @@ import Button from "react-bootstrap/Button";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 function SearchDNS() {
   return (
     <Form>
@@ -58,9 +66,9 @@ function DNSComponent() {
       </Row>
 
       <Row className="justify-content-md-center">
-        <Col md={4}>Results:</Col>
+        <Col md={2}>Results:</Col>
         <Col>
-          <div>Display Results here</div>
+          <GetLatestResults />
         </Col>
       </Row>
 
@@ -69,6 +77,47 @@ function DNSComponent() {
       </Row>
     </>
   );
+}
+
+function createFakeData(rank, name){
+  return {rank, name}
+}
+
+const data = [
+  createFakeData(1, "Google"),
+  createFakeData(2, "OpenDNS"),
+  createFakeData(3, "Quad9"),
+  createFakeData(4, "CloudFare")
+]
+
+function GetLatestResults() {
+  return (
+    <>
+      <TableContainer component={Paper}>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left" sx={{fontWeight:'bold'}}>Ranking</TableCell>
+              <TableCell align="center" sx={{fontWeight:'bold'}}>DNS</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((data)=>
+              <TableRow 
+                key={data.rank}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {data.rank}
+                </TableCell>
+                <TableCell align="center">{data.name}</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  )
 }
 
 export default DNSComponent;
