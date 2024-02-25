@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import DNSComponent from "./DNSComponent";
+import LocalDNSComponent from './LocalDNSComponent';
 import Navbar from "react-bootstrap/Navbar";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -25,10 +26,20 @@ function NavHeader() {
   );
 }
 
+function IsGlobal(props){
+  if (props.global){
+    return <DNSComponent />;
+  }
+  else {
+    console.log(props.global);
+    return <LocalDNSComponent/>;
+  }
+}
+
 function Page() {
   const [global, setGlobal] = React.useState(true);
   const [dialogOpen, setDialogOpen] = React.useState(false);
-
+  
   return (
     <>
     <Dialog open={dialogOpen}>
@@ -77,7 +88,7 @@ function Page() {
             </Row>
           </Col>
           <Col md={8}>
-            <DNSComponent />
+            <IsGlobal global={global} />
           </Col>
         </Row>
       </Container>

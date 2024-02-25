@@ -72,7 +72,7 @@ function VisualizationComponent() {
   );
 }
 
-function DNSComponent() {
+function LocalDNSComponent() {
   const [state, setState] = useState(false);
   return (
     <>
@@ -102,10 +102,10 @@ function createFakeData(rank, name){
 
 // this should eventually be an api call to get actual data
 let data = [
-  createFakeData(1, "Google"),
-  createFakeData(2, "OpenDNS"),
-  createFakeData(3, "Quad9"),
-  createFakeData(4, "CloudFare")
+  createFakeData(1, "LocalGoogle"),
+  createFakeData(2, "LocalOpenDNS"),
+  createFakeData(3, "LocalQuad9"),
+  createFakeData(4, "LocalCloudFare")
 ]
 
 function sortData() {
@@ -173,4 +173,4 @@ function GetLatestResults() {
   )
 }
 
-export default DNSComponent;
+export default LocalDNSComponent;
