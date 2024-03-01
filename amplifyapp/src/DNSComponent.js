@@ -20,26 +20,26 @@ let searchedRank = ""
 
 function SearchDNS(props) {
   const [entry, setEntry] = useState("");
-  const HandleSubmit = (e) =>{
+  const HandleSubmit = (e) => {
     e.preventDefault();
-    searchedName = entry;   // needs to involve API call
-    searchedRank = 8;       // needs to involve API call
+    searchedName = entry; // needs to involve API call
+    searchedRank = 8; // needs to involve API call
     data.push(createFakeData(searchedRank, searchedName));
     props.stateSetter(!props.state);
     e.target.reset();
     setEntry("");
-  }
+  };
   return (
     <Form onSubmit={HandleSubmit}>
       <Form.Group as={Row} className="mb-3" controlId="formSearchDNS">
-        <Form.Label column sm={4}>
-          Enter a DNS Resolver:
+        <Form.Label column sm={3}>
+          <b>Search DNS Resolver</b>
         </Form.Label>
-        <Col sm={8}>
-          <Form.Control 
-            placeholder="Search..." 
+        <Col sm={7}>
+          <Form.Control
+            placeholder="Search..."
             value={entry}
-            onChange={e => setEntry(e.target.value)}
+            onChange={(e) => setEntry(e.target.value)}
           />
         </Col>
       </Form.Group>
@@ -51,7 +51,7 @@ function VisualizationComponent() {
   const [key, setKey] = useState("D1");
 
   return (
-    <div>
+    <div className="mt-3">
       <Tabs
         id="visualizationTabs"
         activeKey={key}
@@ -77,14 +77,14 @@ function DNSComponent() {
   return (
     <>
       <Row className="justify-content-md-center">
-        <Col md={8}>
-          <SearchDNS state={state} stateSetter={setState}/>
-        </Col>
+        <SearchDNS state={state} stateSetter={setState} />
       </Row>
 
-      <Row className="justify-content-md-center">
-        <Col md={2}>Results:</Col>
-        <Col>
+      <Row>
+        <Col md={3}>
+          <b>Global Results:</b>
+        </Col>
+        <Col md={7}>
           <GetLatestResults />
         </Col>
       </Row>
@@ -96,8 +96,8 @@ function DNSComponent() {
   );
 }
 
-function createFakeData(rank, name){
-  return {rank, name};
+function createFakeData(rank, name) {
+  return { rank, name };
 }
 
 // this should eventually be an api call to get actual data
@@ -105,8 +105,8 @@ let data = [
   createFakeData(1, "Google"),
   createFakeData(2, "OpenDNS"),
   createFakeData(3, "Quad9"),
-  createFakeData(4, "CloudFare")
-]
+  createFakeData(4, "CloudFare"),
+];
 
 function sortData() {
   let n = data.length;
