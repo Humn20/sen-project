@@ -34,7 +34,7 @@ function NavHeader() {
             <path d="M1.333 6.334v3C1.333 10.805 4.318 12 8 12s6.667-1.194 6.667-2.667V6.334a6.5 6.5 0 0 1-1.458.79C11.81 7.684 9.967 8 8 8s-3.809-.317-5.208-.876a6.5 6.5 0 0 1-1.458-.79z" />
             <path d="M14.667 11.668a6.5 6.5 0 0 1-1.458.789c-1.4.56-3.242.876-5.21.876-1.966 0-3.809-.316-5.208-.876a6.5 6.5 0 0 1-1.458-.79v1.666C1.333 14.806 4.318 16 8 16s6.667-1.194 6.667-2.667z" />
           </svg>
-          &nbsp; Periodic Domain Name Server Resolver Recommender
+          &nbsp; <b>Periodic Domain Name Server Resolver Recommender</b>
         </div>
       </Navbar.Brand>
     </Navbar>
@@ -86,6 +86,8 @@ function Page() {
                   onClick={() => {
                     setGlobal(false);
                   }}
+                  class="fw-bold"
+                  className={`text-center ${global ? "" : "fw-bold"}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -107,6 +109,7 @@ function Page() {
                   onClick={() => {
                     setGlobal(true);
                   }}
+                  className={`text-center ${global ? "fw-bold" : ""}`}
                 >
                   <div>
                     <span>
@@ -125,23 +128,40 @@ function Page() {
                     &nbsp;Global
                   </div>
                 </Button>
-                <div>
-                  Explanation of the site and the difference between local and
-                  global.{" "}
-                </div>
-              </div>
-            </Row>
-            <Row>
-              <div className="d-grid gap-2">
-                <Button
-                  variant="dark"
-                  size="lg"
-                  onClick={() => {
-                    setDialogOpen(true);
-                  }}
-                >
-                  Want to switch resolver? Find out how!
-                </Button>
+                <p className="text-center">
+                  Welcome to our Domain Name Server Resolver Recommender! The
+                  Domain Name System (DNS) is a critical internet infrastructure
+                  that translates user-friendly domain names into numeric IP
+                  addresses, facilitating seamless communication between
+                  devices. While our devices typically default to a DNS
+                  resolver, the performance of each provider can vary over time.
+                  To address this variability, we've developed a web application
+                  that gauges the real-time performance of different DNS
+                  resolvers. Our PDNS Resolver operates on a scheduled 30-minute
+                  interval, generating a curated list of DNS resolvers ranked by
+                  performance tailored to your location in the United States.
+                  This dynamic approach ensures users receive recommendations
+                  aligned with their current needs. Our application allows
+                  individuals to enhance their internet experience by
+                  prioritizing performance, security, and reliability. The tool
+                  also provides historical performance data, allowing users to
+                  assess how each DNS resolver has performed in the past. By
+                  leveraging our Resolver Recommender, users gain insights into
+                  optimal DNS resolver choices without the need for technical
+                  expertise or script execution. Our website is instantly
+                  updated following each scheduled query, ensuring users access
+                  the most accurate and up-to-date information. Want to switch
+                  resolver?{" "}
+                  <Button
+                    variant="dark"
+                    size="sm"
+                    onClick={() => {
+                      setDialogOpen(true);
+                    }}
+                  >
+                    Click Here To Find out how!
+                  </Button>
+                </p>
               </div>
             </Row>
           </Col>
