@@ -32,10 +32,10 @@ function SearchDNS(props) {
   return (
     <Form onSubmit={HandleSubmit}>
       <Form.Group as={Row} className="mb-3" controlId="formSearchDNS">
-        <Form.Label column sm={4}>
-          Enter a DNS Resolver:
+        <Form.Label column sm={3}>
+          <b>Search DNS Resolver</b>
         </Form.Label>
-        <Col sm={8}>
+        <Col sm={7}>
           <Form.Control 
             placeholder="Search..." 
             value={entry}
@@ -51,7 +51,7 @@ function VisualizationComponent() {
   const [key, setKey] = useState("D1");
 
   return (
-    <div>
+    <div className="mt-3">
       <Tabs
         id="visualizationTabs"
         activeKey={key}
@@ -77,14 +77,14 @@ function LocalDNSComponent() {
   return (
     <>
       <Row className="justify-content-md-center">
-        <Col md={8}>
           <SearchDNS state={state} stateSetter={setState}/>
-        </Col>
       </Row>
 
-      <Row className="justify-content-md-center">
-        <Col md={2}>Results:</Col>
-        <Col>
+      <Row>
+        <Col md={3}>
+          <b>Local Results:</b>
+          </Col>
+        <Col md={7}>
           <GetLatestResults />
         </Col>
       </Row>

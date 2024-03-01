@@ -82,7 +82,7 @@ function DNSComponent() {
 
       <Row>
         <Col md={3}>
-          <b>Results:</b>
+          <b>Global Results:</b>
         </Col>
         <Col md={7}>
           <GetLatestResults />
