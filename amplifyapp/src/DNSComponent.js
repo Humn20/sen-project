@@ -84,7 +84,6 @@ function VisualizationComponent() {
           <Histogram key={key} data={data} />
         </Tab>
         <Tab eventKey="D2" title="Display 2">
-          <Histogram key={key} data={data} />
         </Tab>
         <Tab eventKey="D3" title="Display 3">
           Visulization content for D3

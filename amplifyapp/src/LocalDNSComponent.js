@@ -14,6 +14,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Bar } from 'react-chartjs-2';
 
 let searchedName = ""
 let searchedRank = ""
@@ -46,6 +47,26 @@ function SearchDNS(props) {
     </Form>
   );
 }
+function Histogram({ data }) {
+  const histogram_data = {
+    labels: data.map(entry => entry.name),
+    datasets: [
+      {
+        label: 'DNS Rankings',
+        data: data.map(entry => entry.rank),
+        backgroundColor: 'rgba(0, 128, 0, 0.2)',
+        borderColor: 'rgba(0, 128, 0, 0.2)', 
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  return (
+    <div style={{ width: '80%', margin: 'auto' }}>
+      <Bar data={histogram_data } />
+    </div>
+  );
+}
 
 function VisualizationComponent() {
   const [key, setKey] = useState("D1");
@@ -59,7 +80,7 @@ function VisualizationComponent() {
         className="mb-3"
       >
         <Tab eventKey="D1" title="Display 1">
-          Visulization content for D1
+        <Histogram key={key} data={data} />
         </Tab>
         <Tab eventKey="D2" title="Display 2">
           Visulization content for D2
