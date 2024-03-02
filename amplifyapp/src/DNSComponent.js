@@ -33,10 +33,10 @@ function SearchDNS(props) {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group as={Row} className="mb-3" controlId="formSearchDNS">
-        <Form.Label column sm={4}>
-          Enter a DNS Resolver:
+        <Form.Label column sm={3}>
+          <b>Search DNS Resolver:</b>
         </Form.Label>
-        <Col sm={8}>
+        <Col sm={7}>
           <Form.Control 
             placeholder="Search..." 
             value={entry}
@@ -69,6 +69,31 @@ function Histogram({ data }) {
   );
 }
 
+function VisualizationComponent() {
+  const [key, setKey] = useState("D1");
+
+  return (
+    <div className="mt-3">
+      <Tabs
+        id="visualizationTabs"
+        activeKey={key}
+        onSelect={(k) => setKey(k)}
+        className="mb-3"
+      >
+        <Tab eventKey="D1" title="Display 1">
+          <Histogram key={key} data={data} />
+        </Tab>
+        <Tab eventKey="D2" title="Display 2">
+          <Histogram key={key} data={data} />
+        </Tab>
+        <Tab eventKey="D3" title="Display 3">
+          Visulization content for D3
+        </Tab>
+      </Tabs>
+    </div>
+  );
+}
+
 function DNSComponent() {
   const [state, setState] = useState(false);
   const [key, setKey] = useState(0);
@@ -80,20 +105,22 @@ function DNSComponent() {
   return (
     <>
       <Row className="justify-content-md-center">
-        <Col md={8}>
+        
           <SearchDNS state={state} stateSetter={setState}/>
-        </Col>
+        
       </Row>
 
-      <Row className="justify-content-md-center">
-        <Col md={2}>Results:</Col>
-        <Col>
+      <Row>
+        <Col md={3}>
+          <b>Global Results:</b>
+          </Col>
+        <Col md={7}>
           <GetLatestResults key={key} />
         </Col>
       </Row>
 
       <Row>
-        <Histogram key={key} data={data} />
+        <VisualizationComponent/>
       </Row>
     </>
   );
@@ -175,17 +202,4 @@ function GetLatestResults() {
   )
 }
 
-function App() {
-  return (
-    <Tabs defaultActiveKey="global" id="uncontrolled-tab-example" className="mb-3">
-      <Tab eventKey="global" title="Global">
-        <DNSComponent />
-      </Tab>
-      <Tab eventKey="local" title="Local">
-        <DNSComponent /> 
-      </Tab>
-    </Tabs>
-  );
-}
-
-export default App;
+export default DNSComponent;
