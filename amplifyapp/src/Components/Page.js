@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import DNSComponent from "./DNSComponent";
-import LocalDNSComponent from './LocalDNSComponent';
+import LocalDNSComponent from "./LocalDNSComponent";
 import Navbar from "react-bootstrap/Navbar";
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
 import { useContext } from "react";
 
 function NavHeader() {
@@ -73,6 +73,7 @@ function Page() {
           </Button>
         </DialogActions>
       </Dialog>
+
       <div>
         <NavHeader />
 
