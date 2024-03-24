@@ -78,7 +78,7 @@ function Page() {
       <div>
         <NavHeader />
 
-        <Row>
+        <Row className="mx-auto pt-2">
           <Col md={4}>
             <Row>
               <div className="d-grid gap-2">
