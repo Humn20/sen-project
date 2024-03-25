@@ -6,12 +6,13 @@ import Button from "react-bootstrap/Button";
 import DNSComponent from "./DNSComponent";
 import LocalDNSComponent from "./LocalDNSComponent";
 import Navbar from "react-bootstrap/Navbar";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
 import { useContext } from "react";
 import Card from "react-bootstrap/Card";
+import DnsSwitch from "./DnsSwitch";
+import Modal from "react-bootstrap/Modal";
+import ModalDialog from "react-bootstrap/esm/ModalDialog";
+import { useState } from "react";
+import Toast from "react-bootstrap/Toast";
 
 function NavHeader() {
   return (
@@ -53,31 +54,12 @@ function IsGlobal(props) {
 
 function Page() {
   const [global, setGlobal] = React.useState(true);
-  const [dialogOpen, setDialogOpen] = React.useState(false);
+  // const [dialogOpen, setDialogOpen] = React.useState(false);
 
   return (
     <>
-      <Dialog open={dialogOpen}>
-        <DialogTitle sx={{ backgroundColor: "primary.dark", color: "white" }}>
-          How to switch your resolver:
-        </DialogTitle>
-        <DialogContent>instructions</DialogContent>
-        <DialogActions>
-          <Button
-            variant="contained"
-            onClick={() => {
-              setDialogOpen(false);
-            }}
-            sx={{ width: 120, marginRight: "5px" }}
-          >
-            &nbsp; Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-
       <div>
         <NavHeader />
-
         <Row className="mx-auto pt-2">
           <Col md={4}>
             <Row>
@@ -160,15 +142,7 @@ function Page() {
                       scheduled query, ensuring users access the most accurate
                       and up-to-date information.{" "}
                     </Card.Text>
-                    <Button
-                      variant="dark"
-                      size="sm"
-                      onClick={() => {
-                        setDialogOpen(true);
-                      }}
-                    >
-                      Click Here To Find out how to Switch Resolver!
-                    </Button>
+                    <ChangeDnsModal />
                   </Card.Body>
                 </Card>
               </div>
@@ -182,5 +156,33 @@ function Page() {
     </>
   );
 }
+
+function ChangeDnsModal() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+    <>
+      <Button variant="dark" onClick={handleShow}>
+        Click Here To Find out how to Switch Resolver!
+      </Button>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title>Choose your Operating System</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <DnsSwitch />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}
+
 
 export default Page;
