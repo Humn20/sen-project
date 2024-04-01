@@ -1,8 +1,6 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Stack from "react-bootstrap/Stack";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Tab from "react-bootstrap/Tab";
@@ -14,26 +12,29 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Bar } from 'react-chartjs-2';
+import React from "react";
+import Chart from 'chart.js/auto';
 
 let searchedName = ""
 let searchedRank = ""
 
 function SearchDNS(props) {
   const [entry, setEntry] = useState("");
-  const HandleSubmit = (e) =>{
+  const handleSubmit = (e) =>{
     e.preventDefault();
-    searchedName = entry;   // needs to involve API call
-    searchedRank = 8;       // needs to involve API call
+    searchedName = entry;   
+    searchedRank = 8;       
     data.push(createFakeData(searchedRank, searchedName));
     props.stateSetter(!props.state);
     e.target.reset();
     setEntry("");
   }
   return (
-    <Form onSubmit={HandleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <Form.Group as={Row} className="mb-3" controlId="formSearchDNS">
         <Form.Label column sm={3}>
-          <b>Search DNS Resolver</b>
+          <b>Search DNS Resolver:</b>
         </Form.Label>
         <Col sm={7}>
           <Form.Control 
@@ -44,6 +45,27 @@ function SearchDNS(props) {
         </Col>
       </Form.Group>
     </Form>
+  );
+}
+
+function Histogram({ data }) {
+  const histogram_data = {
+    labels: data.map(entry => entry.name),
+    datasets: [
+      {
+        label: 'DNS Rankings',
+        data: data.map(entry => entry.rank),
+        backgroundColor: 'rgba(0, 128, 0, 0.2)',
+        borderColor: 'rgba(0, 128, 0, 0.2)', 
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  return (
+    <div style={{ width: '80%', margin: 'auto' }}>
+      <Bar data={histogram_data } />
+    </div>
   );
 }
 
@@ -59,10 +81,9 @@ function VisualizationComponent() {
         className="mb-3"
       >
         <Tab eventKey="D1" title="Display 1">
-          Visulization content for D1
+          <Histogram key={key} data={data} />
         </Tab>
         <Tab eventKey="D2" title="Display 2">
-          Visulization content for D2
         </Tab>
         <Tab eventKey="D3" title="Display 3">
           Visulization content for D3
@@ -72,25 +93,33 @@ function VisualizationComponent() {
   );
 }
 
-function LocalDNSComponent() {
+function DNSComponent() {
   const [state, setState] = useState(false);
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    setKey(prevKey => prevKey + 1);
+}, [state]);
+
   return (
     <>
       <Row className="justify-content-md-center">
+        
           <SearchDNS state={state} stateSetter={setState}/>
+        
       </Row>
 
       <Row>
         <Col md={3}>
-          <b>Local Results:</b>
+          <b>Global Results:</b>
           </Col>
         <Col md={7}>
-          <GetLatestResults />
+          <GetLatestResults key={key} />
         </Col>
       </Row>
 
       <Row>
-        <VisualizationComponent />
+        <VisualizationComponent/>
       </Row>
     </>
   );
@@ -100,12 +129,11 @@ function createFakeData(rank, name){
   return {rank, name};
 }
 
-// this should eventually be an api call to get actual data
 let data = [
-  createFakeData(1, "LocalGoogle"),
-  createFakeData(2, "LocalOpenDNS"),
-  createFakeData(3, "LocalQuad9"),
-  createFakeData(4, "LocalCloudFare")
+  createFakeData(1, "Google"),
+  createFakeData(2, "OpenDNS"),
+  createFakeData(3, "Quad9"),
+  createFakeData(4, "CloudFare")
 ]
 
 function sortData() {
@@ -155,9 +183,9 @@ function GetLatestResults() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataForTable.map((data)=>
+            {dataForTable.map((data, index)=> (
               <TableRow 
-                key={data.rank}
+                key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
@@ -165,7 +193,7 @@ function GetLatestResults() {
                 </TableCell>
                 <TableCell align="center">{data.name}</TableCell>
               </TableRow>
-            )}
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -173,4 +201,4 @@ function GetLatestResults() {
   )
 }
 
-export default LocalDNSComponent;
+export default DNSComponent;

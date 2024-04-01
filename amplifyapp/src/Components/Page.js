@@ -1,16 +1,18 @@
-import React from 'react';
+import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import DNSComponent from "./DNSComponent";
-import LocalDNSComponent from './LocalDNSComponent';
+import LocalDNSComponent from "./LocalDNSComponent";
 import Navbar from "react-bootstrap/Navbar";
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import { useContext } from "react";
+import Card from "react-bootstrap/Card";
+import DnsSwitch from "./DnsSwitch";
+import Modal from "react-bootstrap/Modal";
+import ModalDialog from "react-bootstrap/esm/ModalDialog";
+import { useState } from "react";
+import Toast from "react-bootstrap/Toast";
 
 function NavHeader() {
   return (
@@ -52,31 +54,13 @@ function IsGlobal(props) {
 
 function Page() {
   const [global, setGlobal] = React.useState(true);
-  const [dialogOpen, setDialogOpen] = React.useState(false);
+  // const [dialogOpen, setDialogOpen] = React.useState(false);
 
   return (
     <>
-      <Dialog open={dialogOpen}>
-        <DialogTitle sx={{ backgroundColor: "primary.dark", color: "white" }}>
-          How to switch your resolver:
-        </DialogTitle>
-        <DialogContent>instructions</DialogContent>
-        <DialogActions>
-          <Button
-            variant="contained"
-            onClick={() => {
-              setDialogOpen(false);
-            }}
-            sx={{ width: 120, marginRight: "5px" }}
-          >
-            &nbsp; Close
-          </Button>
-        </DialogActions>
-      </Dialog>
       <div>
         <NavHeader />
-
-        <Row>
+        <Row className="mx-auto pt-2">
           <Col md={4}>
             <Row>
               <div className="d-grid gap-2">
@@ -128,40 +112,39 @@ function Page() {
                     &nbsp;Global
                   </div>
                 </Button>
-                <p className="text-center">
-                  Welcome to our Domain Name Server Resolver Recommender! The
-                  Domain Name System (DNS) is a critical internet infrastructure
-                  that translates user-friendly domain names into numeric IP
-                  addresses, facilitating seamless communication between
-                  devices. While our devices typically default to a DNS
-                  resolver, the performance of each provider can vary over time.
-                  To address this variability, we've developed a web application
-                  that gauges the real-time performance of different DNS
-                  resolvers. Our PDNS Resolver operates on a scheduled 30-minute
-                  interval, generating a curated list of DNS resolvers ranked by
-                  performance tailored to your location in the United States.
-                  This dynamic approach ensures users receive recommendations
-                  aligned with their current needs. Our application allows
-                  individuals to enhance their internet experience by
-                  prioritizing performance, security, and reliability. The tool
-                  also provides historical performance data, allowing users to
-                  assess how each DNS resolver has performed in the past. By
-                  leveraging our Resolver Recommender, users gain insights into
-                  optimal DNS resolver choices without the need for technical
-                  expertise or script execution. Our website is instantly
-                  updated following each scheduled query, ensuring users access
-                  the most accurate and up-to-date information. Want to switch
-                  resolver?{" "}
-                  <Button
-                    variant="dark"
-                    size="sm"
-                    onClick={() => {
-                      setDialogOpen(true);
-                    }}
-                  >
-                    Click Here To Find out how!
-                  </Button>
-                </p>
+
+                <Card>
+                  <Card.Body>
+                    <Card.Title>Information</Card.Title>
+                    <Card.Text>
+                      Welcome to our Domain Name Server Resolver Recommender!
+                      The Domain Name System (DNS) is a critical internet
+                      infrastructure that translates user-friendly domain names
+                      into numeric IP addresses, facilitating seamless
+                      communication between devices. While our devices typically
+                      default to a DNS resolver, the performance of each
+                      provider can vary over time. To address this variability,
+                      we've developed a web application that gauges the
+                      real-time performance of different DNS resolvers. Our PDNS
+                      Resolver operates on a scheduled 30-minute interval,
+                      generating a curated list of DNS resolvers ranked by
+                      performance tailored to your location in the United
+                      States. This dynamic approach ensures users receive
+                      recommendations aligned with their current needs. Our
+                      application allows individuals to enhance their internet
+                      experience by prioritizing performance, security, and
+                      reliability. The tool also provides historical performance
+                      data, allowing users to assess how each DNS resolver has
+                      performed in the past. By leveraging our Resolver
+                      Recommender, users gain insights into optimal DNS resolver
+                      choices without the need for technical expertise or script
+                      execution. Our website is instantly updated following each
+                      scheduled query, ensuring users access the most accurate
+                      and up-to-date information.{" "}
+                    </Card.Text>
+                    <ChangeDnsModal />
+                  </Card.Body>
+                </Card>
               </div>
             </Row>
           </Col>
@@ -173,5 +156,33 @@ function Page() {
     </>
   );
 }
+
+function ChangeDnsModal() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+    <>
+      <Button variant="dark" onClick={handleShow}>
+        Click Here To Find out how to Switch Resolver!
+      </Button>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title>Choose your Operating System</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <DnsSwitch />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}
+
 
 export default Page;
