@@ -12,7 +12,6 @@ import DnsSwitch from "./DnsSwitch";
 import Modal from "react-bootstrap/Modal";
 import ModalDialog from "react-bootstrap/esm/ModalDialog";
 import { useState } from "react";
-import Toast from "react-bootstrap/Toast";
 
 function NavHeader() {
   return (
@@ -183,6 +182,5 @@ function ChangeDnsModal() {
     </>
   );
 }
-
 
 export default Page;
