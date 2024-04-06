@@ -21,7 +21,7 @@ import { useEffect } from "react";
 
 let searchedName = "";
 let searchedRank = "";
-let data;
+
 
 function SearchDNS(props) {
   const [entry, setEntry] = useState("");
@@ -99,25 +99,6 @@ function VisualizationComponent() {
 
 function LocalDNSComponent() {
   const [state, setState] = useState(false);
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://34.127.79.39:18292/GET");
-        console.log(response);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        console.log(data);
-        setData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
 
   return (
     <>
@@ -145,50 +126,49 @@ function createFakeData(rank, name) {
   return { rank, name };
 }
 
-// this should eventually be an api call to get actual data
-// let data = [
-//   createFakeData(1, "LocalGoogle"),
-//   createFakeData(2, "LocalOpenDNS"),
-//   createFakeData(3, "LocalQuad9"),
-//   createFakeData(4, "LocalCloudFare"),
-// ];
+let data = [
+  createFakeData(1, "LocalGoogle"),
+  createFakeData(2, "LocalOpenDNS"),
+  createFakeData(3, "LocalQuad9"),
+  createFakeData(4, "LocalCloudFare"),
+];
 
-// function sortData() {
-//   let n = data.length;
-//   let i, key, j;
-//   for (i = 1; i < n; i++) {
-//     key = data[i];
-//     j = i - 1;
-//     while (j >= 0 && data[j].rank > key.rank) {
-//       data[j + 1] = data[j];
-//       j = j - 1;
-//     }
-//     data[j + 1] = key;
-//   }
-//   data = data.filter(
-//     (value, index, self) =>
-//       index ===
-//       self.findIndex((t) => t.rank === value.rank && t.name === value.name)
-//   );
-// }
+function sortData() {
+  let n = data.length;
+  let i, key, j;
+  for (i = 1; i < n; i++) {
+    key = data[i];
+    j = i - 1;
+    while (j >= 0 && data[j].rank > key.rank) {
+      data[j + 1] = data[j];
+      j = j - 1;
+    }
+    data[j + 1] = key;
+  }
+  data = data.filter(
+    (value, index, self) =>
+      index ===
+      self.findIndex((t) => t.rank === value.rank && t.name === value.name)
+  );
+}
 
-// function addBlanks() {
-//   let dataToTable = [];
-//   let i;
-//   for (i = 0; i < data.length - 1; i++) {
-//     dataToTable.push(data[i]);
-//     if (
-//       data[i].rank !== data[i + 1].rank - 1 &&
-//       data[i].rank !== data[i + 1].rank
-//     ) {
-//       dataToTable.push(createFakeData("...", "..."));
-//     }
-//   }
-//   dataToTable.push(
-//     createFakeData(data[data.length - 1].rank, data[data.length - 1].name)
-//   );
-//   return dataToTable;
-// }
+function addBlanks() {
+  let dataToTable = [];
+  let i;
+  for (i = 0; i < data.length - 1; i++) {
+    dataToTable.push(data[i]);
+    if (
+      data[i].rank !== data[i + 1].rank - 1 &&
+      data[i].rank !== data[i + 1].rank
+    ) {
+      dataToTable.push(createFakeData("...", "..."));
+    }
+  }
+  dataToTable.push(
+    createFakeData(data[data.length - 1].rank, data[data.length - 1].name)
+  );
+  return dataToTable;
+}
 
 function GetLatestResults({ data }) {
   // sortData();

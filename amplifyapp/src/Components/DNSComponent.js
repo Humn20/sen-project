@@ -96,6 +96,30 @@ function VisualizationComponent() {
 function DNSComponent() {
   const [state, setState] = useState(false);
   const [key, setKey] = useState(0);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("about to fetch...");
+      try {
+        const response = await fetch("http://34.127.79.39:18292/GET", {
+          // mode: "no-cors", // Add mode option here
+        });
+        console.log(response.status);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+
+        const parsedData = JSON.parse(data); // Parse the JSON string
+        console.log(parsedData);
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     setKey(prevKey => prevKey + 1);
