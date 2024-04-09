@@ -103,16 +103,13 @@ function DNSComponent() {
       console.log("about to fetch...");
       try {
         const response = await fetch("http://34.127.79.39:18292/GET", {
-          // mode: "no-cors", // Add mode option here
         });
         console.log(response.status);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-
-        const parsedData = JSON.parse(data); // Parse the JSON string
-        console.log(parsedData);
+        console.log(data);
         setData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -128,9 +125,7 @@ function DNSComponent() {
   return (
     <>
       <Row className="justify-content-md-center">
-        
           <SearchDNS state={state} stateSetter={setState}/>
-        
       </Row>
 
       <Row>
