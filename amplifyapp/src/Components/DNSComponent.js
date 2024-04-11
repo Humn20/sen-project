@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -14,7 +11,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Bar } from "react-chartjs-2";
 import React from "react";
-import Chart from 'chart.js/auto';
 
 let searchedName = ""
 let searchedRank = ""
@@ -75,8 +71,6 @@ function Histogram({ data }) {
     </div>
   );
 }
-
-
 
 function DNSComponent() {
   const [state, setState] = useState(false);
@@ -212,14 +206,14 @@ function LatencyTable({ data }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {sortedData.map((row) => (
-            <TableRow key={row.resolver}>
-              <TableCell>{row.rank}</TableCell>
-              <TableCell>{row.resolver}</TableCell>
-              <TableCell>{row.averageLatency.toFixed(2)}</TableCell>
-              <TableCell>{row.rank}</TableCell>
-              <TableCell>{row.rank}</TableCell>
-              <TableCell>{row.rank}</TableCell>
+        {sortedData.map(({ rank, resolver, averageLatency }) => (
+            <TableRow key={resolver}>
+              <TableCell>{rank}</TableCell>
+              <TableCell>{resolver}</TableCell>
+              <TableCell>{averageLatency}</TableCell>
+              <TableCell>{data[resolver]["adobe.com"]}</TableCell>
+              <TableCell>{data[resolver]["apple.com"]}</TableCell>
+              <TableCell>{data[resolver]["google.com"]}</TableCell>
             </TableRow>
           ))}
         </TableBody>
