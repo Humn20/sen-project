@@ -50,11 +50,11 @@ function SearchDNS(props) {
 function Histogram({ data }) {
   console.log("Histogram data:", data);
   const histogram_data = {
-    labels: data.map((entry) => entry.resolver),
-     datasets: [
+    labels: Object.keys(data).map((entry) => entry.resolver), // .keys or .values will work maybe?
+    datasets: [
       {
         label: "Average Latency",
-        data: data.map((entry) => entry.averageLatency),
+        data: Object.values(data).map((entry) => entry.averageLatency),
         backgroundColor: "rgba(0, 128, 0, 0.2)",
         borderColor: "rgba(0, 128, 0, 0.2)",
         borderWidth: 2,
