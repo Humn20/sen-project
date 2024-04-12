@@ -101,7 +101,8 @@ function DNSComponent() {
     const fetchData = async () => {
       console.log("about to fetch...");
       try {
-        const response = await fetch("http://34.127.79.39:18292/GET", {});
+        const response = await fetch("https://cors-anywhere.herokuapp.com/http://34.127.79.39:18292/GET", {});
+        //const response = await fetch("http://34.127.79.39:18292/GET", {});
         console.log(response.status);
         if (!response.ok) {
           throw new Error("Network response was not ok");
