@@ -123,12 +123,9 @@ function DNSComponent() {
 
   return (
     <>
-      <Row className="justify-content-md-center">
-        <SearchDNS state={state} stateSetter={setState} />
-      </Row>
 
       <Row>
-        <b>Global Results:</b>
+        <b>Results:</b>
         <Col md={11}>
           {/* <GetLatestResults key={key} /> */}
           <LatencyTable data={data} />
