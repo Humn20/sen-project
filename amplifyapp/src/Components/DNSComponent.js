@@ -47,7 +47,7 @@ function Histogram({ data }) {
   console.log("Histogram data:", data);
   const resolverNames = Object.keys(data);
   const averageLatencies = Object.values(data).map(
-    (resolverData) => resolverData.averageLatency
+    (resolverData) => (resolverData['adobe.com'] + resolverData['apple.com'] + resolverData['google.com'])/3
   );
   console.log(resolverNames);
   console.log(averageLatencies);
