@@ -11,9 +11,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Bar } from "react-chartjs-2";
 import React from "react";
+import Button from "react-bootstrap/Button";
 
-let searchedName = ""
-let searchedRank = ""
+let searchedName = "";
+let searchedRank = "";
 
 function SearchDNS(props) {
   const [entry, setEntry] = useState("");
@@ -47,7 +48,11 @@ function Histogram({ data }) {
   console.log("Histogram data:", data);
   const resolverNames = Object.keys(data);
   const averageLatencies = Object.values(data).map(
-    (resolverData) => (resolverData['adobe.com'] + resolverData['apple.com'] + resolverData['google.com'])/3
+    (resolverData) =>
+      (resolverData["adobe.com"] +
+        resolverData["apple.com"] +
+        resolverData["google.com"]) /
+      3
   );
   console.log(resolverNames);
   console.log(averageLatencies);
@@ -77,39 +82,69 @@ function DNSComponent() {
   const [key, setKey] = useState(0);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log("about to fetch...");
-      try {
-        const response = await fetch("http://34.127.79.39:18292/GET", {});
-        console.log(response.status);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        console.log(data);
-        setData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  const fetchData = async () => {
+    console.log("about to fetch...");
+    try {
+      const response = await fetch("http://34.127.79.39:18292/GET", {});
+      console.log(response.status);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
-    fetchData();
+      const data = await response.json();
+      console.log(data);
+      setData(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(); // Fetch data when the component mounts
   }, []);
 
   useEffect(() => {
     setKey((prevKey) => prevKey + 1);
   }, [state]);
 
+  //handle refresh button
+  const handleRefresh = () => {
+    fetchData(); // Fetch data when the refresh button is clicked
+  };
+
   return (
     <>
-      <Row className="justify-content-md-center">
+      {/* <Row className="justify-content-md-center">
         <SearchDNS state={state} stateSetter={setState} />
-      </Row>
+      </Row> */}
 
       <Row>
-        <b>Global Results:</b>
+        <Row>
+          <Col md={9}>
+            <b>Global Results:</b>
+          </Col>
+          <Col md={3}>
+            {" "}
+            <Button variant="success" onClick={handleRefresh}>
+              Refresh Results
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-arrow-clockwise"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"
+                />
+                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+              </svg>
+            </Button>{" "}
+          </Col>
+        </Row>
+
         <Col md={11}>
-          {/* <GetLatestResults key={key} /> */}
           <LatencyTable data={data} />
           <Histogram data={data} />
         </Col>
@@ -117,8 +152,6 @@ function DNSComponent() {
     </>
   );
 }
-
-
 
 function LatencyTable({ data }) {
   const [sortedData, setSortedData] = useState([]);
@@ -156,11 +189,17 @@ function LatencyTable({ data }) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Ranking</TableCell>
-            <TableCell>Resolver</TableCell>
-            <TableCell>Average Latency</TableCell>
             <TableCell>
-              adobe.com{" "}
+              <strong>Ranking</strong>
+            </TableCell>
+            <TableCell>
+              <strong>Resolver</strong>
+            </TableCell>
+            <TableCell>
+              <strong>Average Latency</strong>
+            </TableCell>
+            <TableCell>
+              <strong>adobe.com&nbsp;</strong>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -177,7 +216,7 @@ function LatencyTable({ data }) {
               </svg>
             </TableCell>
             <TableCell>
-              apple.com{" "}
+              <strong>apple.com&nbsp;</strong>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -191,22 +230,22 @@ function LatencyTable({ data }) {
               </svg>
             </TableCell>
             <TableCell>
-              google.com{" "}
+              <strong>google.com&nbsp;</strong>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
                 fill="currentColor"
-                className="bi bi-google"
+                class="bi bi-google"
                 viewBox="0 0 16 16"
               >
-                <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.584 2.344l-2.46 2.46a4.8 4.8 0 0 0-1.42-1.248L10.25 3.35a8 8 0 0 1 5.295 3.21l-2.91 2.91c-.301-.618-.683-1.18-1.14-1.655l2.91-2.91zM8 6.4v-.001l-4.8 4.8L8 15.2c1.827 0 3.526-.785 4.7-2.155L11.1 11.7c-.752.626-1.72 1.012-2.8 1.012-2.21 0-4-1.79-4-4s1.79-4 4-4c1.312 0 2.44.63 3.175 1.611l-1.32 1.32a4.8 4.8 0 0 0-1.6-1.003L8 6.4z" />
+                <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z" />
               </svg>
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-        {sortedData.map(({ rank, resolver, averageLatency }) => (
+          {sortedData.map(({ rank, resolver, averageLatency }) => (
             <TableRow key={resolver}>
               <TableCell>{rank}</TableCell>
               <TableCell>{resolver}</TableCell>
