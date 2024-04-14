@@ -2,6 +2,12 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
+import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import macDNS from "./macDNS.jpeg"; // Correct the import path
+import windows10DNS from "./windows10dns.jpeg";
+import windows11DNS from "./windows11dns.jpeg";
 
 export default function DnsSwitch() {
   const [key, setKey] = useState("mac");
@@ -38,6 +44,7 @@ export default function DnsSwitch() {
             colon gets you a slap on the write. In macOS, by observation, you
             can enter just about anything.
           </p>
+          <Image src={macDNS} rounded fluid />
         </Tab>
         <Tab eventKey="windows 11" title="Windows 11">
           <ListGroup as="ol" numbered>
@@ -73,6 +80,7 @@ export default function DnsSwitch() {
             HTTPS (DoH). Leave those turned off, for now, as this technology
             isn't universally supported.
           </p>
+          <Image src={windows11DNS} rounded fluid />
         </Tab>
         <Tab eventKey="windows 10" title="Windows 10">
           <ListGroup as="ol" numbered>
@@ -106,6 +114,7 @@ export default function DnsSwitch() {
               example, Google's 8.8.8.8 becomes 2001:4860:4860::8888.
             </p>
           </ListGroup>
+          <Image src={windows10DNS} rounded fluid />
         </Tab>
         <Tab eventKey="android" title="Android">
           <ListGroup as="ol" numbered>
