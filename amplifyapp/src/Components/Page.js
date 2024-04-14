@@ -118,7 +118,7 @@ function ChangeDnsModal() {
       <Button variant="dark" onClick={handleShow}>
         Click Here To Find out how to Switch Resolver!
       </Button>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header>
           <Modal.Title>Choose your Operating System</Modal.Title>
         </Modal.Header>
