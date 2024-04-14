@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import { Bar } from "react-chartjs-2";
 import React from "react";
 import Button from "react-bootstrap/Button";
+import { Tabs, Tab } from "react-bootstrap"; 
 
 let searchedName = "";
 let searchedRank = "";
@@ -44,7 +45,7 @@ function SearchDNS(props) {
   );
 }
 
-function Histogram({ data }) {
+function AverageHistogram({ data }) {
   console.log("Histogram data:", data);
   const resolverNames = Object.keys(data);
   const averageLatencies = Object.values(data).map(
@@ -58,7 +59,7 @@ function Histogram({ data }) {
   console.log(averageLatencies);
 
   const histogram_data = {
-    labels: resolverNames, // .keys or .values will work maybe?
+    labels: resolverNames, 
     datasets: [
       {
         label: "Average Latency",
@@ -77,6 +78,89 @@ function Histogram({ data }) {
   );
 }
 
+function AdobeHistogram({ data }) {
+  console.log("AdobeHistogram data:", data);
+  const resolverNames = Object.keys(data);
+  const adobeLatencies = Object.values(data).map(
+    (resolverData) => resolverData["adobe.com"]
+  );
+  console.log(resolverNames);
+  console.log(adobeLatencies);
+
+  const histogram_data = {
+    labels: resolverNames,
+    datasets: [
+      {
+        label: "Adobe's Latency",
+        data: adobeLatencies,
+        backgroundColor: "rgba(0, 128, 0, 0.2)",
+        borderColor: "rgba(0, 128, 0, 0.2)",
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  return (
+    <div style={{ width: "80%", margin: "auto" }}>
+      <Bar data={histogram_data} />
+    </div>
+  );
+}
+
+function AppleHistogram({ data }) {
+  console.log("AppleHistogram data:", data);
+  const resolverNames = Object.keys(data);
+  const appleLatencies = Object.values(data).map(
+    (resolverData) => resolverData["apple.com"]
+  );
+  console.log(resolverNames);
+  console.log(appleLatencies);
+
+  const histogram_data = {
+    labels: resolverNames,
+    datasets: [
+      {
+        label: "Apple's Latency",
+        data: appleLatencies,
+        backgroundColor: "rgba(0, 128, 0, 0.2)",
+        borderColor: "rgba(0, 128, 0, 0.2)",
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  return (
+    <div style={{ width: "80%", margin: "auto" }}>
+      <Bar data={histogram_data} />
+    </div>
+  );
+}
+
+function GoogleHistogram({ data }) {
+  const resolverNames = Object.keys(data);
+  const googleLatencies = Object.values(data).map(
+    (resolverData) => resolverData["google.com"]
+  );
+
+  const histogram_data = {
+    labels: resolverNames,
+    datasets: [
+      {
+        label: "Google's Latency",
+        data: googleLatencies,
+        backgroundColor: "rgba(0, 128, 0, 0.2)",
+        borderColor: "rgba(0, 128, 0, 0.2)",
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  return (
+    <div style={{ width: "80%", margin: "auto" }}>
+      <Bar data={histogram_data} />
+    </div>
+  );
+}
 function DNSComponent() {
   const [state, setState] = useState(false);
   const [key, setKey] = useState(0);
@@ -146,7 +230,26 @@ function DNSComponent() {
 
         <Col md={11}>
           <LatencyTable data={data} />
-          <Histogram data={data} />
+          <br></br>
+          <Tabs
+            id="histogramTabs"
+            activeKey={key}
+            onSelect={(k) => setKey(k)}
+            className="mb-3"
+          >
+            <Tab eventKey="D1" title="Average Latencies">
+              <AverageHistogram key={key} data={data} />
+            </Tab>
+            <Tab eventKey="D2" title="Adobe's Latency">
+            <AdobeHistogram key={key} data={data} />
+            </Tab>
+            <Tab eventKey="D3" title="Apple's Latency">
+            <AppleHistogram key={key} data={data} />
+            </Tab>
+            <Tab eventKey="D4" title="Google's Latency">
+            <GoogleHistogram key={key} data={data} />
+            </Tab>
+          </Tabs>
         </Col>
       </Row>
     </>
@@ -259,6 +362,7 @@ function LatencyTable({ data }) {
       </Table>
     </TableContainer>
   );
+  
 }
 
 export default DNSComponent;
