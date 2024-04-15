@@ -161,39 +161,40 @@ function GoogleHistogram({ data }) {
     </div>
   );
 }
+
+
+
 function DNSComponent() {
   const [state, setState] = useState(false);
   const [key, setKey] = useState(0);
   const [data, setData] = useState([]);
 
-  const fetchData = async () => {
-    console.log("about to fetch...");
-    try {
-      const response = await fetch("http://34.127.79.39:18292/GET", {});
-      console.log(response.status);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      console.log(data);
-      setData(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchData(); // Fetch data when the component mounts
+    const fetchData = async () => {
+      console.log("about to fetch...");
+      try {
+        // const response = await fetch(
+        //   "https://cors-anywhere.herokuapp.com/http://34.127.79.39:18292/GET",
+        //   {}
+        // );
+        const response = await fetch("http://34.127.79.39:18292/GET", {});
+        console.log(response.status);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log(data);
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
     setKey((prevKey) => prevKey + 1);
   }, [state]);
-
-  //handle refresh button
-  const handleRefresh = () => {
-    fetchData(); // Fetch data when the refresh button is clicked
-  };
 
   return (
     <>
@@ -206,26 +207,7 @@ function DNSComponent() {
           <Col md={9}>
             <b>Global Results:</b>
           </Col>
-          <Col md={3}>
-            {" "}
-            <Button variant="success" onClick={handleRefresh}>
-              Refresh Results
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-arrow-clockwise"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"
-                />
-                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
-              </svg>
-            </Button>{" "}
-          </Col>
+          <Col md={3}></Col>
         </Row>
 
         <Col md={11}>
@@ -241,13 +223,13 @@ function DNSComponent() {
               <AverageHistogram key={key} data={data} />
             </Tab>
             <Tab eventKey="D2" title="Adobe's Latency">
-            <AdobeHistogram key={key} data={data} />
+              <AdobeHistogram key={key} data={data} />
             </Tab>
             <Tab eventKey="D3" title="Apple's Latency">
-            <AppleHistogram key={key} data={data} />
+              <AppleHistogram key={key} data={data} />
             </Tab>
             <Tab eventKey="D4" title="Google's Latency">
-            <GoogleHistogram key={key} data={data} />
+              <GoogleHistogram key={key} data={data} />
             </Tab>
           </Tabs>
         </Col>
