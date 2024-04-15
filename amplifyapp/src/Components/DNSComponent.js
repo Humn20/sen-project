@@ -266,7 +266,7 @@ function LatencyTable({ data }) {
         <TableHead>
           <TableRow>
             <TableCell>
-              <strong>Ranking</strong>
+              <strong>Rank #</strong>
             </TableCell>
             <TableCell>
               <strong>Resolver</strong>
