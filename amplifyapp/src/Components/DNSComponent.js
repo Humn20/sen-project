@@ -166,15 +166,16 @@ function GoogleHistogram({ data }) {
 
 function DNSComponent() {
   const [state, setState] = useState(false);
-  const [key, setKey] = useState(0);
+  //const [key, setKey] = useState(0);
+  const [key, setKey] = useState("D1"); // Set default activeKey to "D1"
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       console.log("about to fetch...");
       try {
-        const response = await fetch("https://cors-anywhere.herokuapp.com/http://34.127.79.39:18292/GET", {});
-        //const response = await fetch("http://34.127.79.39:18292/GET", {});
+        //const response = await fetch("https://cors-anywhere.herokuapp.com/http://34.127.79.39:18292/GET", {});
+        const response = await fetch("http://34.127.79.39:18292/GET", {});
         console.log(response.status);
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -193,12 +194,14 @@ function DNSComponent() {
     setKey((prevKey) => prevKey + 1);
   }, [state]);
 
+  useEffect(() => {
+    setKey("D1"); // Set the key to "D1" when state changes
+  }, [state]);
+
   return (
     <>
-
       <Row>
-        <b>Results:</b>
-        <Col md={11}>
+        <Col md={12}>
           <LatencyTable data={data} />
           <br></br>
           <Tabs
