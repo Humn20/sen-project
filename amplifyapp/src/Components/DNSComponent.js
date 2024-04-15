@@ -13,6 +13,7 @@ import { Bar } from "react-chartjs-2";
 import React from "react";
 import Button from "react-bootstrap/Button";
 import { Tabs, Tab } from "react-bootstrap"; 
+import { Spinner } from "react-bootstrap";
 
 let searchedName = "";
 let searchedRank = "";
@@ -45,7 +46,7 @@ function SearchDNS(props) {
   );
 }
 
-function AverageHistogram({ data }) {
+function AverageHistogram({ data, isLoading }) {
   console.log("Histogram data:", data);
   const resolverNames = Object.keys(data);
   const averageLatencies = Object.values(data).map(
@@ -59,7 +60,7 @@ function AverageHistogram({ data }) {
   console.log(averageLatencies);
 
   const histogram_data = {
-    labels: resolverNames, 
+    labels: resolverNames,
     datasets: [
       {
         label: "Average Latency",
@@ -70,6 +71,17 @@ function AverageHistogram({ data }) {
       },
     ],
   };
+  if (isLoading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "300px" }}
+      >
+        <Spinner />
+        &nbsp; Loading...
+      </div>
+    );
+  }
 
   return (
     <div style={{ width: "80%", margin: "auto" }}>
@@ -78,7 +90,7 @@ function AverageHistogram({ data }) {
   );
 }
 
-function AdobeHistogram({ data }) {
+function AdobeHistogram({ data, isLoading }) {
   console.log("AdobeHistogram data:", data);
   const resolverNames = Object.keys(data);
   const adobeLatencies = Object.values(data).map(
@@ -107,7 +119,7 @@ function AdobeHistogram({ data }) {
   );
 }
 
-function AppleHistogram({ data }) {
+function AppleHistogram({ data, isLoading }) {
   console.log("AppleHistogram data:", data);
   const resolverNames = Object.keys(data);
   const appleLatencies = Object.values(data).map(
@@ -136,7 +148,7 @@ function AppleHistogram({ data }) {
   );
 }
 
-function GoogleHistogram({ data }) {
+function GoogleHistogram({ data, isLoading }) {
   const resolverNames = Object.keys(data);
   const googleLatencies = Object.values(data).map(
     (resolverData) => resolverData["google.com"]
@@ -162,16 +174,16 @@ function GoogleHistogram({ data }) {
   );
 }
 
-
-
 function DNSComponent() {
   const [state, setState] = useState(false);
   //const [key, setKey] = useState(0);
   const [key, setKey] = useState("D1"); // Set default activeKey to "D1"
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true); // Set isLoading to true when fetching data
       console.log("about to fetch...");
       try {
         //const response = await fetch("https://cors-anywhere.herokuapp.com/http://34.127.79.39:18292/GET", {});
@@ -185,6 +197,8 @@ function DNSComponent() {
         setData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false); // Set isLoading to false after fetching data
       }
     };
     fetchData();
@@ -211,16 +225,16 @@ function DNSComponent() {
             className="mb-3"
           >
             <Tab eventKey="D1" title="Average Latencies">
-              <AverageHistogram key={key} data={data} />
+              <AverageHistogram key={key} data={data} isLoading={isLoading} />
             </Tab>
             <Tab eventKey="D2" title="Adobe's Latency">
-              <AdobeHistogram key={key} data={data} />
+              <AdobeHistogram key={key} data={data} isLoading={isLoading} />
             </Tab>
             <Tab eventKey="D3" title="Apple's Latency">
-              <AppleHistogram key={key} data={data} />
+              <AppleHistogram key={key} data={data} isLoading={isLoading} />
             </Tab>
             <Tab eventKey="D4" title="Google's Latency">
-              <GoogleHistogram key={key} data={data} />
+              <GoogleHistogram key={key} data={data} isLoading={isLoading} />
             </Tab>
           </Tabs>
         </Col>
