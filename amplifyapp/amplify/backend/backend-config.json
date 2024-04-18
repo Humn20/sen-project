@@ -1,0 +1,9 @@
+{
+  "function": {
+    "apiGetRequest": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
+}
