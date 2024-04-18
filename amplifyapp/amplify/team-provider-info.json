@@ -13,7 +13,13 @@
     },
     "categories": {
       "function": {
-        "apiGetRequest": {}
+        "apiGetRequest": {
+          "deploymentBucketName": "amplify-pdnsr-dev-a9188-deployment",
+          "s3Key": "amplify-builds/apiGetRequest-59795a694c4256442f2f-build.zip"
+        }
+      },
+      "api": {
+        "apiGetRequestSP": {}
       }
     }
   }
