@@ -14,6 +14,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import { Tabs, Tab } from "react-bootstrap"; 
 import { Spinner } from "react-bootstrap";
+import Predictions from './Predictions.js'
 
 let searchedName = "";
 let searchedRank = "";
@@ -203,7 +204,6 @@ function DNSComponent() {
     };
     fetchData();
   }, []);
-
   useEffect(() => {
     setKey((prevKey) => prevKey + 1);
   }, [state]);
@@ -235,6 +235,9 @@ function DNSComponent() {
             </Tab>
             <Tab eventKey="D4" title="Google's Latency">
               <GoogleHistogram key={key} data={data} isLoading={isLoading} />
+            </Tab>
+            <Tab eventKey = "D5" title = "Future Predictions">
+              <Predictions/>
             </Tab>
           </Tabs>
         </Col>
