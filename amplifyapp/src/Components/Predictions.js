@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
 function Predictions() {
     const [chartData, setChartData] = useState(null);
@@ -56,40 +56,50 @@ function Predictions() {
    console.log('quad9-google', quad9_google)
   //  console.log("The data is", resdata);
   
-    const options = {
-        scales: {
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Latency (ms)'
-                }
-            },
-            x: {
-                title: {
-                    display: true,
-                    text: 'Resolvers'
-                }
+  const options = {
+    scales: {
+        y: {
+            beginAtZero: true,
+            title: {
+                display: true,
+                text: 'Latency (ms)'
+            }
+        },
+        x: {
+            title: {
+                display: true,
+                text: 'Dates'
             }
         }
-    };
+    }
+};
 
-    return (
-        <div>
-            {error ? (
-                <p>{error}</p>
+return (
+    <div>
+        {error ? (
+            <p>{error}</p>
+        ) : (
+            chartData && chartData.labels ? (
+                <Line
+                    data={{
+                        labels: chartData.labels,
+                        datasets: [
+                            {
+                                label: 'Cloudflare - Adobe',
+                                data: chartData['cloudflare - adobe.com']["datasets"][0]["data"],
+                                borderColor: 'rgba(255, 99, 132, 0.6)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            },
+                        ]
+                    }}
+                    options={options}
+                />
             ) : (
-                chartData && chartData.datasets ? (
-                    <Bar
-                        data={chartData}
-                        options={options}
-                    />
-                ) : (
-                    <p>Loading chart data...</p>
-                )
-            )}
-        </div>
-    );
+                <p>Loading chart data...</p>
+            )
+        )}
+    </div>
+);
 }
 
 export default Predictions;
