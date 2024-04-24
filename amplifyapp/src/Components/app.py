@@ -40,14 +40,14 @@ def get_chart_data():
     forecast_results = {}
     for (resolver, website), group in data_for_model.groupby(['resolver', 'website']):
         model = ExponentialSmoothing(group['30_day_avg'], seasonal_periods=12, trend='add', seasonal='add').fit()
-        forecast = model.forecast(steps=30)  # Forecasting 30 days ahead
-        forecast_results[(resolver, website)] = forecast.tolist()  # Convert forecast to list
+        forecast = model.forecast(steps=30)  
+        forecast_results[(resolver, website)] = forecast.tolist()  
 
     chart_data = {}
     for (resolver, website), forecast in forecast_results.items():
         timestamps = pd.date_range(start=df_selected_last_30_days['timestamp'].max() + pd.DateOffset(days=1), periods=30, freq='D')
         chart_data[f"{resolver} - {website}"] = {
-            "labels": timestamps.strftime('%Y-%m-%d').tolist(),  # Convert timestamps to list of strings
+            "labels": timestamps.strftime('%Y-%m-%d').tolist(),  
             "datasets": [
                 {
                     "label": "Forecast",
