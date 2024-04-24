@@ -2,8 +2,6 @@ from flask import Flask, jsonify
 import requests
 import pandas as pd
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
-import matplotlib.pyplot as plt
-import seaborn as sns
 from flask_cors import CORS 
 
 app = Flask(__name__)
@@ -45,13 +43,18 @@ def get_chart_data():
         forecast = model.forecast(steps=30)  # Forecasting 30 days ahead
         forecast_results[(resolver, website)] = forecast.tolist()  # Convert forecast to list
 
-    chart_data = []
+    chart_data = {}
     for (resolver, website), forecast in forecast_results.items():
-        chart_data.append({
-            'resolver': resolver,
-            'website': website,
-            'forecast': forecast
-        })
+        timestamps = pd.date_range(start=df_selected_last_30_days['timestamp'].max() + pd.DateOffset(days=1), periods=30, freq='D')
+        chart_data[f"{resolver} - {website}"] = {
+            "labels": timestamps.strftime('%Y-%m-%d').tolist(),  # Convert timestamps to list of strings
+            "datasets": [
+                {
+                    "label": "Forecast",
+                    "data": forecast
+                }
+            ]
+        }
 
     return jsonify(chart_data)
 

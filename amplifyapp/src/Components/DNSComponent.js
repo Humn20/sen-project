@@ -50,6 +50,7 @@ function SearchDNS(props) {
 function AverageHistogram({ data, isLoading }) {
   console.log("Histogram data:", data);
   const resolverNames = Object.keys(data);
+  console.log("Res names", resolverNames)
   const averageLatencies = Object.values(data).map(
     (resolverData) =>
       (resolverData["adobe.com"] +
@@ -194,7 +195,7 @@ function DNSComponent() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        console.log(data);
+        console.log("This is the data", data);
         setData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
