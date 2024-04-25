@@ -5,10 +5,10 @@
   "javascript": {
     "framework": "react",
     "config": {
-      "SourceDir": "/amplifyapp/src",
-      "DistributionDir": "build",
-      "BuildCommand": "npm run-script build",
-      "StartCommand": "npm run-script start"
+      "SourceDir": "amplifyapp/src",
+      "DistributionDir": "amplifyapp/build",
+      "BuildCommand": "npm run-script --prefix ./amplifyapp build",
+      "StartCommand": "npm run-script --prefix ./amplifyapp start"
     }
   },
   "providers": [

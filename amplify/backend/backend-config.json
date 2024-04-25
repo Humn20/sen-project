@@ -1,1 +1,50 @@
-{}
+{
+  "function": {
+    "senprojecte8660048": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "providerPlugin": "awscloudformation",
+      "service": "amplifyhosting",
+      "type": "manual"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_senprojecte8660048_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "senprojecte8660048"
+        }
+      ]
+    },
+    "AMPLIFY_function_senprojecte8660048_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "senprojecte8660048"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_appId": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_type": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    }
+  }
+}
