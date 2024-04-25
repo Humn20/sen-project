@@ -47,26 +47,41 @@ function Predictions() {
     }
   }, [chartData]);
 
+  const lineColors = [
+    "rgba(255, 99, 132, 0.6)",
+    "rgba(255, 255, 0, 0.6)",
+    "rgba(75, 192, 192, 0.6)",
+    "rgba(54, 162, 235, 0.6)",
+    "rgba(153, 102, 255, 0.6)",
+    "rgba(255, 159, 64, 0.6)",
+    "rgba(0, 128, 0, 0.6)", 
+    "rgba(255, 0, 255, 0.6)", 
+    "rgba(0, 0, 255, 0.6)", 
+    "rgba(255, 0, 0, 0.6)", 
+    "rgba(0, 255, 255, 0.6)", 
+    "rgba(128, 0, 128, 0.6)", 
+    "rgba(128, 128, 0, 0.6)", 
+    "rgba(255, 192, 203, 0.6)",
+    "rgba(255, 165, 0, 0.6)", 
+    "rgba(128, 128, 128, 0.6)", 
+  ];
+  
   return (
     <div>
       {error ? (
         <p>{error}</p>
       ) : isLoading ? (
         <p>Loading chart data...</p>
-      ) : showChart ? ( // Show the chart when showChart is true
+      ) : showChart ? ( 
         <Line
           data={{
-            labels: chartData.labels,
-            datasets: [
-              {
-                label: "Cloudflare - Adobe",
-                data:
-                  chartData["cloudflare - adobe.com"]?.datasets[0]?.data || [],
-                borderColor: "rgba(255, 99, 132, 0.6)",
-                backgroundColor: "rgba(255, 99, 132, 0.2)",
-              },
-              // Add other datasets similarly...
-            ],
+            labels: (Object.values(chartData)[0])["labels"],
+            datasets: Object.entries(chartData).map(([key, value], index) => ({
+              label: key,
+              data: value?.datasets[0]?.data || [],
+              borderColor: lineColors[index % lineColors.length],
+              backgroundColor: lineColors[index % lineColors.length].replace(", 0.6)", ", 0.2)"), 
+            })),
           }}
           options={{
             scales: {
