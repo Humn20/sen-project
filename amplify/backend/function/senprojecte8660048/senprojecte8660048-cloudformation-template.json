@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.11.1\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.10.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "apiGetRequest",
+            "senprojecte8660048",
             {
               "Fn::Join": [
                 "",
                 [
-                  "apiGetRequest",
+                  "senprojecte8660048",
                   "-",
                   {
                     "Ref": "env"
@@ -78,7 +78,7 @@
             "Arn"
           ]
         },
-        "Runtime": "python3.10",
+        "Runtime": "python3.11",
         "Layers": [],
         "Timeout": 25
       }
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "pdnsrLambdaRole29751f8f",
+            "senprojectLambdaRolec26a23b7",
             {
               "Fn::Join": [
                 "",
                 [
-                  "pdnsrLambdaRole29751f8f",
+                  "senprojectLambdaRolec26a23b7",
                   "-",
                   {
                     "Ref": "env"

@@ -1,9 +1,9 @@
 {
   "version": 1,
   "paths": {
-    "/get": {
-      "name": "/get",
-      "lambdaFunction": "apiGetRequest",
+    "/GET": {
+      "name": "/GET",
+      "lambdaFunction": "senprojecte8660048",
       "permissions": {
         "setting": "open"
       }
