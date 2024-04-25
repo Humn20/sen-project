@@ -1,4 +1,20 @@
 {
+  "api": {
+    "PDNSR": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "senprojecte8660048"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "function": {
     "senprojecte8660048": {
       "build": true,

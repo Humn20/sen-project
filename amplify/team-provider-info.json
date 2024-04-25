@@ -23,6 +23,9 @@
           "deploymentBucketName": "amplify-senproject-dev-151436-deployment",
           "s3Key": "amplify-builds/senprojecte8660048-4955654f675677724d43-build.zip"
         }
+      },
+      "api": {
+        "PDNSR": {}
       }
     }
   }
