@@ -194,14 +194,12 @@ function DNSComponent() {
         const requestData = {
           headers: {},
         };
-        const response = await API.get("PDNSR", "/GET", {});
-        console.log(response.status);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+        const response = await API.get("PDNSR", "/GET", requestData);
+        console.log(response); // Log the response object
+        if (!response) {
+          throw new Error("No data received from server");
         }
-        const data = await response.json();
-        console.log(data);
-        setData(data);
+        setData(response);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
