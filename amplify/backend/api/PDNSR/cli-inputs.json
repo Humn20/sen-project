@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/GET": {
+      "name": "/GET",
+      "lambdaFunction": "senprojecte8660048",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

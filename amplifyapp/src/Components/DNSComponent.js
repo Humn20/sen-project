@@ -12,11 +12,14 @@ import Paper from "@mui/material/Paper";
 import { Bar } from "react-chartjs-2";
 import React from "react";
 import Button from "react-bootstrap/Button";
-import { Tabs, Tab } from "react-bootstrap"; 
+import { Tabs, Tab } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
+import { Amplify, API } from "aws-amplify";
+import awsconfig from "../aws-exports";
 
 let searchedName = "";
 let searchedRank = "";
+Amplify.configure(awsconfig);
 
 function SearchDNS(props) {
   const [entry, setEntry] = useState("");
@@ -187,14 +190,16 @@ function DNSComponent() {
       console.log("about to fetch...");
       try {
         //const response = await fetch("https://cors-anywhere.herokuapp.com/http://34.127.79.39:18292/GET", {});
-        const response = await fetch("http://34.127.79.39:18292/GET", {});
-        console.log(response.status);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+        // const response = await fetch("http://34.127.79.39:18292/GET", {});
+        const requestData = {
+          headers: {},
+        };
+        const response = await API.get("PDNSR", "/GET", requestData);
+        console.log(response); // Log the response object
+        if (!response) {
+          throw new Error("No data received from server");
         }
-        const data = await response.json();
-        console.log(data);
-        setData(data);
+        setData(response);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -349,7 +354,6 @@ function LatencyTable({ data }) {
       </Table>
     </TableContainer>
   );
-  
 }
 
 export default DNSComponent;
