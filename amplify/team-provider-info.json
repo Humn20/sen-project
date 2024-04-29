@@ -22,6 +22,10 @@
         "senprojecte8660048": {
           "deploymentBucketName": "amplify-senproject-dev-151436-deployment",
           "s3Key": "amplify-builds/senprojecte8660048-627a38646d6876717550-build.zip"
+        },
+        "senproject63a3e403": {
+          "deploymentBucketName": "amplify-senproject-dev-151436-deployment",
+          "s3Key": "amplify-builds/senproject63a3e403-6f59785747654d375144-build.zip"
         }
       },
       "api": {
