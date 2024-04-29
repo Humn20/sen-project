@@ -16,6 +16,7 @@ import { Tabs, Tab } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
 import { Amplify, API } from "aws-amplify";
 import awsconfig from "../aws-exports";
+import Predictions from './Predictions.js'
 
 let searchedName = "";
 let searchedRank = "";
@@ -240,6 +241,9 @@ function DNSComponent() {
             </Tab>
             <Tab eventKey="D4" title="Google's Latency">
               <GoogleHistogram key={key} data={data} isLoading={isLoading} />
+            </Tab>
+            <Tab eventKey = "D5" title = "Future Predictions">
+              <Predictions/>
             </Tab>
           </Tabs>
         </Col>
