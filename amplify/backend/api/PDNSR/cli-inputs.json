@@ -7,6 +7,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/chart-data": {
+      "name": "/chart-data",
+      "lambdaFunction": "senproject63a3e403",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }
